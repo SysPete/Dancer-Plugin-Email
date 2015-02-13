@@ -47,8 +47,10 @@ register email => sub {
             my %mime;
             if (ref($attachment) eq 'HASH') {
                 %mime = %$attachment;
-                unless ($mime{Path}) {
-                    warning "No Path provided for this attachment!";
+                if (   ( !$mime{Path} && !$mime{Data} )
+                    || ( $mime{Path} && $mime{Data} ) )
+                {
+                    warning "Attachment must have one of Path or Data!";
                     next;
                 };
                 $mime{Encoding} ||= 'base64';
