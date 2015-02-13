@@ -54,7 +54,7 @@ register email => sub {
                     next;
                 };
                 $mime{Encoding} ||= 'base64';
-                $mime{Type} ||= File::Type->mime_type($mime{Path}),
+                $mime{Type} ||= File::Type->mime_type($mime{Path}||$mime{Data}),
             } else {
                 %mime = (
                     Path     => $attachment,
